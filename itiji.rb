@@ -2,9 +2,9 @@ require 'rubygems'
 require 'cleverbot-api'
 require 'cinch'
 
-@cleverbot = CleverBot.new
+#@cleverbot = CleverBot.new
 
-@ircbot = Cinch::Bot.new do
+ircbot = Cinch::Bot.new do
   configure do |c|
     c.server = "irc.freenode.org"
     c.channels = ["#iit"]
@@ -12,8 +12,9 @@ require 'cinch'
   end
 
   on :message, /itiji/ do |m|
-    m.reply @cleverbot.think m.message
+    cleverbot = CleverBot.new
+    m.reply cleverbot.think(m.message)
   end
 end
 
-@ircbot.start
+ircbot.start
