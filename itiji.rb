@@ -13,7 +13,7 @@ ircbot = Cinch::Bot.new do
 
   on :message, /itiji/ do |m|
     cleverbot = CleverBot.new
-    m.reply cleverbot.think(m.message)
+    m.reply "LOL #{cleverbot.think(m.message)}"
   end
 end
 
