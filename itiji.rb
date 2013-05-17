@@ -2,8 +2,13 @@ require 'rubygems'
 require 'cleverbot-api'
 require 'cinch'
 
-@@cleverbot = CleverBot.new
-@@prefixes  = ["LOL", "zomg", "hahahahaha", "lololol", "HAHAHA"]
+def chance(percent)
+  rand(100) <= percent
+end
+
+@@cleverbot     = CleverBot.new
+@@prefixes      = ["LOL", "zomg", "hahahahaha", "lololol", "HAHAHA"]
+@@prefix_chance = 25
 
 ircbot = Cinch::Bot.new do
   configure do |c|
@@ -13,7 +18,10 @@ ircbot = Cinch::Bot.new do
   end
 
   on :message, /itiji/ do |m|
-    m.reply "#{@@prefixes.sample} #{@@cleverbot.think(m.message)}"
+    prefix = ""
+    prefix = "#{@@prefixes.sample} " if chance(@@prefix_chance)
+
+    m.reply "#{prefix}#{@@cleverbot.think(m.message)}"
   end
 end
 
