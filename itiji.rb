@@ -2,13 +2,22 @@ require 'rubygems'
 require 'cleverbot-api'
 require 'cinch'
 
+@@prefixes         = ["LOL", "zomg", "hahahahaha", "lololol", "HAHAHA"]
+@@prefix_chance    = 25
+@@interrupt_chance = 1
+
+@@cleverbot = CleverBot.new
+
 def chance(percent)
   rand(100) <= percent
 end
 
-@@cleverbot     = CleverBot.new
-@@prefixes      = ["LOL", "zomg", "hahahahaha", "lololol", "HAHAHA"]
-@@prefix_chance = 25
+def create_reply(message)
+  prefix = ""
+  prefix = "#{@@prefixes.sample} " if chance(@@prefix_chance)
+
+  "#{prefix}#{@@cleverbot.think(message)}"
+end
 
 ircbot = Cinch::Bot.new do
   configure do |c|
@@ -17,11 +26,16 @@ ircbot = Cinch::Bot.new do
     c.nick = "itiji"
   end
 
-  on :message, /itiji/ do |m|
-    prefix = ""
-    prefix = "#{@@prefixes.sample} " if chance(@@prefix_chance)
+  # Any message
+  on :message do |m|
+    if chance(@@interrupt_chance)
+      m.reply "#{m.user.nick}: #{create_reply(m.message)}"
+    end
+  end
 
-    m.reply "#{prefix}#{@@cleverbot.think(m.message)}"
+  # Hilight message
+  on :message, /itiji/ do |m|
+    m.reply create_reply(m.message)
   end
 end
 
