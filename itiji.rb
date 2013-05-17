@@ -2,9 +2,8 @@ require 'rubygems'
 require 'cleverbot-api'
 require 'cinch'
 
-#@cleverbot = CleverBot.new
-
-@prefixes = ["LOL", "zomg", "hahahahaha", "lololol", "HAHAHA"]
+@@cleverbot = CleverBot.new
+@@prefixes  = ["LOL", "zomg", "hahahahaha", "lololol", "HAHAHA"]
 
 ircbot = Cinch::Bot.new do
   configure do |c|
@@ -14,8 +13,7 @@ ircbot = Cinch::Bot.new do
   end
 
   on :message, /itiji/ do |m|
-    cleverbot = CleverBot.new
-    m.reply "#{@prefixes.sample} #{cleverbot.think(m.message)}"
+    m.reply "#{@@prefixes.sample} #{@@cleverbot.think(m.message)}"
   end
 end
 
