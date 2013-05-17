@@ -4,6 +4,8 @@ require 'cinch'
 
 #@cleverbot = CleverBot.new
 
+@prefixes = ["LOL", "zomg", "hahahahaha", "lololol", "HAHAHA"]
+
 ircbot = Cinch::Bot.new do
   configure do |c|
     c.server = "irc.freenode.org"
@@ -13,7 +15,7 @@ ircbot = Cinch::Bot.new do
 
   on :message, /itiji/ do |m|
     cleverbot = CleverBot.new
-    m.reply "LOL #{cleverbot.think(m.message)}"
+    m.reply "#{@prefixes.sample} #{cleverbot.think(m.message)}"
   end
 end
 
