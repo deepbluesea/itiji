@@ -2,9 +2,10 @@ require 'rubygems'
 require 'cleverbot-api'
 require 'cinch'
 
+@@use_prefixes = false
 @@prefixes         = ["LOL", "zomg", "hahahahaha", "lololol", "HAHAHA"]
 @@prefix_chance    = 25
-@@interrupt_chance = 1
+@@interrupt_chance = 3
 
 @@cleverbot = CleverBot.new
 
@@ -14,7 +15,7 @@ end
 
 def create_reply(message)
   prefix = ""
-  prefix = "#{@@prefixes.sample} " if chance(@@prefix_chance)
+  prefix = "#{@@prefixes.sample} " if chance(@@prefix_chance) and @@use_prefixes
 
   "#{prefix}#{@@cleverbot.think(message)}"
 end
@@ -22,8 +23,8 @@ end
 ircbot = Cinch::Bot.new do
   configure do |c|
     c.server = "irc.freenode.org"
-    c.channels = ["#iit"]
-    c.nick = "itiji"
+    c.channels = ["#nocyn"]
+    c.nick = "nocynbot"
   end
 
   # Any message
@@ -34,7 +35,7 @@ ircbot = Cinch::Bot.new do
   end
 
   # Hilight message
-  on :message, /itiji/ do |m|
+  on :message, /nocynbot/ do |m|
     m.reply create_reply(m.message)
   end
 end

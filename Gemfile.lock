@@ -1,8 +1,8 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    cinch (2.0.4)
-    cleverbot-api (0.0.3)
+    cinch (2.0.9)
+    cleverbot-api (0.0.4)
 
 PLATFORMS
   ruby
