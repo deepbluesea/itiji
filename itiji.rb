@@ -23,8 +23,8 @@ end
 ircbot = Cinch::Bot.new do
   configure do |c|
     c.server = "irc.freenode.org"
-    c.channels = ["#nocyn"]
-    c.nick = "nocynbot"
+    c.channels = ["#chat"]
+    c.nick = "chadx1"
   end
 
   # Any message
